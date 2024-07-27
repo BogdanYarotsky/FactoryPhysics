@@ -14,14 +14,14 @@ namespace FactoryPhysics.Lib.Tests
                 new(3), // 3 hours process time
                 new(1)  // 1 hour process time
             });
-            
-            var productionLine = new ProductionLine(workstations);
+
             var criticalWip = Factory.GetCriticalWorkInProcess(workstations);
             var rawProcessTime = Factory.GetRawProcessTime(workstations);
-            var idealCycleTime = new CycleTime(rawProcessTime.Hours);
 
-            var perfectUtilization = productionLine.GetUtilization(criticalWip, idealCycleTime);
-            Assert.AreEqual(1.0, perfectUtilization.CapacityFraction);
+            var utilization = new ProductionLine(workstations)
+                .GetUtilization(criticalWip, new(rawProcessTime.Hours));
+            
+            Assert.AreEqual(1.0, utilization.CapacityFraction);
         }
     }
 }
