@@ -2,11 +2,11 @@ namespace FactoryPhysics.Lib;
 
 public record Workstation
 {
-    public double AverageProcessTimeHours { get; }
+    public double ProcessTimeHours { get; }
 
-    public Workstation(double averageProcessTimeHours)
+    public Workstation(double processTimeHours)
     {
-        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(averageProcessTimeHours);
-        AverageProcessTimeHours = averageProcessTimeHours;
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(processTimeHours);
+        ProcessTimeHours = processTimeHours;
     }
 }
