@@ -1,6 +1,6 @@
 namespace FactoryPhysics.Lib;
 
-public static class Factory
+public static class Formulas
 {
     public static WorkInProcess GetWorkInProcess(CycleTime ct, Throughput th) 
         => new(ct.Hours * th.JobsPerHour);

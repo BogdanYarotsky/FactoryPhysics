@@ -11,7 +11,7 @@ public class WorkInProcessTest
     [TestMethod]
     public void GetExpectedWip()
     {
-        var wip = Factory.GetWorkInProcess(ct: new(2), th: new(0.4));
+        var wip = Formulas.GetWorkInProcess(ct: new(2), th: new(0.4));
         Assert.AreEqual(0.8, wip.Jobs);
     }
 }
