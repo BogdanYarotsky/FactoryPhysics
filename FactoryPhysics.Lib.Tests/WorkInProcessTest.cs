@@ -8,7 +8,6 @@ namespace FactoryPhysics.Lib.Tests;
 [TestSubject(typeof(WorkInProcess))]
 public class WorkInProcessTest
 {
-
     [TestMethod]
     public void GetExpectedWip()
     {

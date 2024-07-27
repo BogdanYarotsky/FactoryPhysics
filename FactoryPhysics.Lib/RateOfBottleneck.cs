@@ -1,10 +1,10 @@
 namespace FactoryPhysics.Lib;
 
-public record BottleneckRate
+public record RateOfBottleneck
 {
     public double JobsPerHour { get; }
     
-    public BottleneckRate(double jobsPerHour)
+    public RateOfBottleneck(double jobsPerHour)
     {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(jobsPerHour);
         JobsPerHour = jobsPerHour;
