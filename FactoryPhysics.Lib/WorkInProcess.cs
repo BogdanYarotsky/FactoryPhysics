@@ -8,7 +8,4 @@ public record WorkInProcess
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(jobs);
         Jobs = jobs;
     }
-    
-    public static WorkInProcess From(CycleTime ct, Throughput th) 
-        => new(ct.Hours * th.JobsPerHour);
 }

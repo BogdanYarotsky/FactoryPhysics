@@ -8,7 +8,4 @@ public record CycleTime
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(hours);
         Hours = hours;
     }
-    
-    public static CycleTime From(WorkInProcess wip, Throughput th) 
-        => new(wip.Jobs / th.JobsPerHour);
 }
