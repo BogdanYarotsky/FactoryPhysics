@@ -8,18 +8,17 @@ namespace FactoryPhysics.Lib.Tests
         [TestMethod]
         public void CriticalWIP_Yields_Maximum_Utilization()
         {
-            var workstations = new Workstations(new Workstation[]
-            {
+            var productionLine = new ProductionLine([
                 new(2), // 2 hours process time
                 new(3), // 3 hours process time
                 new(1)  // 1 hour process time
-            });
+            ]);
 
-            var criticalWip = Factory.GetCriticalWorkInProcess(workstations);
-            var rawProcessTime = Factory.GetRawProcessTime(workstations);
+            var criticalWip = productionLine.CriticalWorkInProcess;
+            var rawProcessTime = productionLine.RawProcessTime;
+            var bestThroughput = Throughput.Calculate(criticalWip, new(rawProcessTime.Hours));
 
-            var utilization = new ProductionLine(workstations)
-                .GetUtilization(criticalWip, new(rawProcessTime.Hours));
+            var utilization = productionLine.GetUtilization(bestThroughput);
             
             Assert.AreEqual(1.0, utilization.CapacityFraction);
         }

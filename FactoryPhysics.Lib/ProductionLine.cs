@@ -1,19 +1,23 @@
+using System.Collections.ObjectModel;
+
 namespace FactoryPhysics.Lib;
 
-public record ProductionLine
+public class ProductionLine : ReadOnlyCollection<Workstation>
 {
-    private readonly Workstations _workstations;
-
-    public ProductionLine(Workstations workstations)
+    public WorkInProcess CriticalWorkInProcess => new(RateOfBottleneck.JobsPerHour * RawProcessTime.Hours);
+    public RateOfBottleneck RateOfBottleneck => new(1 / this.Max(w => w.ProcessTimeHours));
+    public RawProcessTime RawProcessTime => new(this.Sum(w => w.ProcessTimeHours));
+    
+    public ProductionLine(params Workstation[] workstations) : base(workstations)
     {
-        ArgumentNullException.ThrowIfNull(workstations);
-        _workstations = workstations;
+        ArgumentOutOfRangeException.ThrowIfZero(Count);
     }
+    
+    public Utilization GetUtilization(Throughput throughput) 
+        => new(throughput.JobsPerHour / RateOfBottleneck.JobsPerHour);
 
-    public Utilization GetUtilization(WorkInProcess wip, CycleTime ct)
-    {
-        var rb = Factory.GetBottleneckRate(_workstations);
-        var th = Factory.GetThroughput(wip, ct);
-        return Factory.GetUtilization(th, rb);
-    }
+    public CycleTime GetBestCycleTime(WorkInProcess wip) 
+        => wip.Jobs <= CriticalWorkInProcess.Jobs 
+            ? new(RawProcessTime.Hours) 
+            : new(wip.Jobs / RateOfBottleneck.JobsPerHour);
 }
