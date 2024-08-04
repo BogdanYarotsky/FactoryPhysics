@@ -14,13 +14,25 @@ namespace FactoryPhysics.Lib.Tests
                 new(1)  // 1 hour process time
             ]);
 
-            var criticalWip = productionLine.CriticalWorkInProcess;
-            var rawProcessTime = productionLine.RawProcessTime;
+            Assert.AreEqual(1.0, productionLine
+                .WithWorkInProcess(productionLine.CriticalWorkInProcess)
+                .WithCycleTime(new(productionLine.RawProcessTime.Hours))
+                .Utilization.CapacityFraction);
+        }
+        
+        [TestMethod]
+        public void CriticalWIP_Yields_Best_Congestion()
+        {
+            var productionLine = new ProductionLine([
+                new(2), // 2 hours process time
+                new(3), // 3 hours process time
+                new(1)  // 1 hour process time
+            ]);
 
-            var timeMeasuredProductionLine = new TimeMeasuredProductionLine(
-                new(productionLine, criticalWip), new(rawProcessTime.Hours));
-            
-            Assert.AreEqual(1.0, timeMeasuredProductionLine.Utilization.CapacityFraction);
+            Assert.IsTrue(productionLine
+                .WithWorkInProcess(productionLine.CriticalWorkInProcess)
+                .WithCycleTime(new(productionLine.RawProcessTime.Hours))
+                .Congestion.IsBestCase);
         }
     }
 }

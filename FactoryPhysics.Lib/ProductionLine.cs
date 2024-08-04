@@ -12,4 +12,6 @@ public class ProductionLine
         Workstations = workstations ?? throw new ArgumentNullException(nameof(workstations));
         ArgumentOutOfRangeException.ThrowIfZero(workstations.Length);
     }
+
+    public LoadedProductionLine WithWorkInProcess(WorkInProcess w) => new(this, w);
 }

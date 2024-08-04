@@ -31,4 +31,6 @@ public class LoadedProductionLine
         ProductionLine = productionLine ?? throw new ArgumentNullException(nameof(productionLine));
         WorkInProcess = workInProcess ?? throw new ArgumentNullException(nameof(workInProcess));
     }
+
+    public TimeMeasuredProductionLine WithCycleTime(CycleTime ct) => new(this, ct);
 }
