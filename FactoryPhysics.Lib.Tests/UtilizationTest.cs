@@ -16,11 +16,11 @@ namespace FactoryPhysics.Lib.Tests
 
             var criticalWip = productionLine.CriticalWorkInProcess;
             var rawProcessTime = productionLine.RawProcessTime;
-            var bestThroughput = Throughput.Calculate(criticalWip, new(rawProcessTime.Hours));
 
-            var utilization = productionLine.GetUtilization(bestThroughput);
+            var timeMeasuredProductionLine = new TimeMeasuredProductionLine(
+                new(productionLine, criticalWip), new(rawProcessTime.Hours));
             
-            Assert.AreEqual(1.0, utilization.CapacityFraction);
+            Assert.AreEqual(1.0, timeMeasuredProductionLine.Utilization.CapacityFraction);
         }
     }
 }
